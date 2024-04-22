@@ -262,7 +262,7 @@ target_sources(common PRIVATE
   GL/GLExtensions/GLExtensions.h
 )
 
-if(ENABLE_EGL AND EGL_FOUND)
+if(EGL_FOUND)
   target_sources(common PRIVATE
     GL/GLInterface/EGL.cpp
     GL/GLInterface/EGL.h
@@ -272,14 +272,13 @@ if(ENABLE_EGL AND EGL_FOUND)
       GL/GLInterface/EGLAndroid.cpp
       GL/GLInterface/EGLAndroid.h
     )
-  elseif(ENABLE_X11 AND X11_FOUND)
+  elseif(X11_FOUND)
     target_sources(common PRIVATE
       GL/GLInterface/EGLX11.cpp
       GL/GLInterface/EGLX11.h
     )
   endif()
-  target_include_directories(common PRIVATE ${EGL_INCLUDE_DIRS})
-  target_link_libraries(common PUBLIC ${EGL_LIBRARIES})
+  target_link_libraries(common PUBLIC OpenGL::GL EGL::EGL)
 endif()
 
 if(WIN32)
@@ -299,7 +298,7 @@ elseif(HAIKU)
     GL/GLInterface/BGL.h
     GL/GLInterface/BGL.cpp
   )
-elseif(ENABLE_X11 AND X11_FOUND)
+elseif(X11_FOUND)
   target_sources(common PRIVATE
     GL/GLX11Window.cpp
     GL/GLX11Window.h
@@ -309,7 +308,7 @@ elseif(ENABLE_X11 AND X11_FOUND)
 
   # GLX has a hard dependency on libGL.
   # Make sure to link to it if using GLX.
-  target_link_libraries(common PUBLIC ${OPENGL_LIBRARIES})
+  target_link_libraries(common PUBLIC OpenGL::GL)
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")

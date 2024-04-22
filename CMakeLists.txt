@@ -375,7 +375,6 @@ if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
   find_library(FOUNDATION_LIBRARY Foundation)
   find_library(IOB_LIBRARY IOBluetooth)
   find_library(IOK_LIBRARY IOKit)
-  find_library(OPENGL_LIBRARY OpenGL)
 endif()
 
 if(ENABLE_LTO)
@@ -518,9 +517,26 @@ if(ENABLE_X11)
   endif()
 endif()
 
+set(OpenGL_GL_PREFERENCE GLVND CACHE STRING "Linux-only: if GLVND, use the vendor-neutral GL libraries (default). If LEGACY, use the legacy ones (might be necessary to have optirun/primusrun work)")
+set_property(CACHE OpenGL_GL_PREFERENCE PROPERTY STRINGS GLVND LEGACY)
+find_package(OpenGL)
+if(OPENGL_GL_FOUND)
+  add_definitions(-DHAS_OPENGL)
+endif()
 if(ENABLE_EGL)
-  find_package(EGL)
+  # `find_package(OpenGL OPTIONAL_COMPONENTS EGL)` is broken, the package fails
+  # to find OpenGL and all the components if we specify any components; it
+  # also breaks anyone who depends on a previously successful
+  # `find_package(OpenGL)` call, so we don't use it.
+
+  pkg_check_modules(EGL egl IMPORTED_TARGET)
   if(EGL_FOUND)
+    add_library(EGL::EGL ALIAS PkgConfig::EGL)
+  else()
+    # https://code.qt.io/cgit/qt/qtbase.git/tree/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake?h=6.7.0
+    find_package(EGL)
+  endif()
+  if(TARGET EGL::EGL)
     add_definitions(-DHAVE_EGL=1)
     message(STATUS "EGL OpenGL interface enabled")
   else()
@@ -653,11 +669,6 @@ if(ENABLE_VULKAN)
   endif()
 endif()
 
-if(NOT WIN32 OR (NOT (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")))
-  # OpenGL is available on all platforms except windows-arm64
-  add_definitions(-DHAS_OPENGL)
-endif()
-
 dolphin_find_optional_system_library(pugixml Externals/pugixml)
 
 dolphin_find_optional_system_library_pkgconfig(ENET libenet>=1.3.18 enet::enet Externals/enet)
@@ -703,7 +714,9 @@ include_directories(Externals/soundtouch)
 dolphin_find_optional_system_library(CUBEB Externals/cubeb)
 
 if(NOT ANDROID)
-  dolphin_find_optional_system_library(LibUSB Externals/libusb)
+  dolphin_find_optional_system_library_pkgconfig(
+    LibUSB libusb-1.0 LibUSB::LibUSB Externals/libusb
+  )
   add_definitions(-D__LIBUSB__)
 endif()
 
