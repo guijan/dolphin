@@ -201,7 +201,7 @@ elseif (ANDROID)
     androidcommon
   )
 elseif(HAIKU)
-  target_link_libraries(common PRIVATE be GL)
+  target_link_libraries(common PRIVATE be OGL::OGL)
 endif()
 
 if(ANDROID)
@@ -278,7 +278,7 @@ if(EGL_FOUND)
       GL/GLInterface/EGLX11.h
     )
   endif()
-  target_link_libraries(common PUBLIC OpenGL::GL EGL::EGL)
+  target_link_libraries(common PUBLIC OGL::OGL EGL::EGL)
 endif()
 
 if(WIN32)
@@ -308,7 +308,7 @@ elseif(X11_FOUND)
 
   # GLX has a hard dependency on libGL.
   # Make sure to link to it if using GLX.
-  target_link_libraries(common PUBLIC OpenGL::GL)
+  target_link_libraries(common PUBLIC OGL::OGL)
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
