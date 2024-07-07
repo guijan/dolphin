@@ -95,7 +95,7 @@ void ShutdownSoundStream(Core::System& system)
 std::string GetDefaultSoundBackend()
 {
   std::string backend = BACKEND_NULLSOUND;
-#if defined ANDROID
+#if defined __ANDROID__
   backend = BACKEND_OPENSLES;
 #elif defined __linux__
   if (AlsaSound::IsValid())

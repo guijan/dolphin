@@ -8,7 +8,7 @@
 #include <cstdarg>
 #include <cstdlib>
 
-#if defined(ANDROID)
+#if defined(__ANDROID__)
 #include <adrenotools/driver.h>
 #include <dlfcn.h>
 #endif
@@ -56,7 +56,7 @@ static bool OpenVulkanLibrary(bool force_system_library)
   return s_vulkan_module.Open(filename.c_str());
 #else
 
-#if defined(ANDROID) && _M_ARM_64
+#if defined(__ANDROID__) && _M_ARM_64
   const std::string& driver_lib_name = g_Config.customDriverLibraryName;
 
   if (!force_system_library && !driver_lib_name.empty() && SupportsCustomDriver())
@@ -248,7 +248,7 @@ void LogVulkanResult(Common::Log::LogLevel level, const char* func_name, VkResul
                   static_cast<int>(res), VkResultToString(res));
 }
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 static bool CheckKgslPresent()
 {
   constexpr auto KgslPath{"/dev/kgsl-3d0"};

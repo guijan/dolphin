@@ -922,7 +922,7 @@ IPCReply NetIPTopDevice::HandleGetInterfaceOptRequest(const IOCtlVRequest& reque
         FREE(AdapterAddresses);
       }
     }
-#elif (defined(__linux__) && !defined(ANDROID)) || defined(__APPLE__) || defined(__FreeBSD__) ||   \
+#elif (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__) || defined(__FreeBSD__) ||   \
     defined(__OpenBSD__) || defined(__NetBSD__) || defined(__HAIKU__)
     if (!Core::WantsDeterminism())
     {

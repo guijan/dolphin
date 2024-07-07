@@ -218,7 +218,7 @@ bool IsNewWiimote(const std::string& identifier);
 
 void HandleWiimoteSourceChange(unsigned int wiimote_number);
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 void InitAdapterClass();
 #endif
 

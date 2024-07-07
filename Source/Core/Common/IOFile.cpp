@@ -16,7 +16,7 @@
 #include <unistd.h>
 #endif
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 #include <algorithm>
 
 #include "jni/AndroidCommon/AndroidCommon.h"
@@ -79,7 +79,7 @@ bool IOFile::Open(const std::string& filename, const char openmode[],
     m_good = m_file != nullptr;
   }
 #else
-#ifdef ANDROID
+#ifdef __ANDROID__
   if (IsPathAndroidContent(filename))
     m_file = fdopen(OpenAndroidContent(filename, OpenModeToAndroid(openmode)), openmode);
   else

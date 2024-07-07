@@ -18,7 +18,7 @@
 #include "Common/StringUtil.h"
 #endif
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 #include "Common/StringUtil.h"
 #include "jni/AndroidCommon/AndroidCommon.h"
 #endif
@@ -234,7 +234,7 @@ std::string GetThemeDir(const std::string& theme_name);
 // Returns the path to where the sys file are
 const std::string& GetSysDirectory();
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 void SetSysDirectory(const std::string& path);
 void SetGpuDriverDirectories(const std::string& path, const std::string& lib_path);
 const std::string GetGpuDriverDirectory(unsigned int dir_index);
@@ -257,7 +257,7 @@ void OpenFStream(T& fstream, const std::string& filename, std::ios_base::openmod
 #ifdef _WIN32
   fstream.open(UTF8ToTStr(filename).c_str(), openmode);
 #else
-#ifdef ANDROID
+#ifdef __ANDROID__
   // Unfortunately it seems like the non-standard __open is the only way to use a file descriptor
   if (IsPathAndroidContent(filename))
     fstream.__open(OpenAndroidContent(filename, OpenModeToAndroid(openmode)), openmode);

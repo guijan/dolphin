@@ -16,7 +16,7 @@
 #ifdef _MSC_VER
 #include <Windows.h>
 #else
-#ifdef ANDROID
+#ifdef __ANDROID__
 #include "jni/AndroidCommon/AndroidCommon.h"
 #endif
 
@@ -63,7 +63,7 @@ std::vector<std::string> DoFileSearch(const std::vector<std::string>& directorie
   };
   for (const auto& directory : directories)
   {
-#ifdef ANDROID
+#ifdef __ANDROID__
     if (IsPathAndroidContent(directory))
     {
       const std::vector<std::string> partial_result =

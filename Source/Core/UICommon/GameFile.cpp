@@ -55,7 +55,7 @@ const std::string EMPTY_STRING;
 
 bool UseGameCovers()
 {
-#ifdef ANDROID
+#ifdef __ANDROID__
   // Android has its own code for handling covers, written completely in Java.
   // It's best if we disable the C++ cover code on Android to avoid duplicated data and such.
   return false;

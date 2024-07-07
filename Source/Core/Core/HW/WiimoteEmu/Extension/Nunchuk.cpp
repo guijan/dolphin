@@ -199,7 +199,7 @@ void Nunchuk::DoState(PointerWrap& p)
 
 void Nunchuk::LoadDefaults(const ControllerInterface& ciface)
 {
-#ifndef ANDROID
+#ifndef __ANDROID__
   // Stick
   m_stick->SetControlExpression(0, "W");  // up
   m_stick->SetControlExpression(1, "S");  // down

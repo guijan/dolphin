@@ -16,7 +16,7 @@
 #define NORMAL_USER_DIR "Dolphin Emulator"
 #elif defined(__APPLE__)
 #define NORMAL_USER_DIR "Library/Application Support/Dolphin"
-#elif defined(ANDROID)
+#elif defined(__ANDROID__)
 #define NORMAL_USER_DIR "/sdcard/dolphin-emu"
 #else
 #define NORMAL_USER_DIR "dolphin-emu"

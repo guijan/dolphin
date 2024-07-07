@@ -21,7 +21,7 @@ typedef pollfd pollfd_t;
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#if defined(ANDROID) || defined(__HAIKU__)
+#if defined(__ANDROID__) || defined(__HAIKU__)
 #include <fcntl.h>
 #else
 #include <sys/fcntl.h>

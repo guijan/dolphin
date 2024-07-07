@@ -14,7 +14,7 @@ public:
   void Log(Common::Log::LogLevel level, const char* text) override;
 
 private:
-#if !defined _WIN32 && !defined ANDROID
+#if !defined _WIN32 && !defined __ANDROID__
   bool m_use_color = false;
 #endif
 };

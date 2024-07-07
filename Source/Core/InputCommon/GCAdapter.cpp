@@ -3,7 +3,7 @@
 
 #include "InputCommon/GCAdapter.h"
 
-#ifndef ANDROID
+#ifndef __ANDROID__
 #define GCADAPTER_USE_LIBUSB_IMPLEMENTATION true
 #define GCADAPTER_USE_ANDROID_IMPLEMENTATION false
 #else

@@ -274,7 +274,7 @@ void CreateDirectories()
   File::CreateFullPath(File::GetUserPath(D_RETROACHIEVEMENTSCACHE_IDX));
   File::CreateFullPath(File::GetUserPath(D_STATESAVES_IDX));
   File::CreateFullPath(File::GetUserPath(D_ASM_ROOT_IDX));
-#ifndef ANDROID
+#ifndef __ANDROID__
   File::CreateFullPath(File::GetUserPath(D_THEMES_IDX));
   File::CreateFullPath(File::GetUserPath(D_STYLES_IDX));
 #else
@@ -447,7 +447,7 @@ void SetUserDirectory(std::string custom_path)
     {
       user_path = env_path;
     }
-#if defined(__APPLE__) || defined(ANDROID)
+#if defined(__APPLE__) || defined(__ANDROID__)
     else
     {
       user_path = home_path + NORMAL_USER_DIR DIR_SEP;

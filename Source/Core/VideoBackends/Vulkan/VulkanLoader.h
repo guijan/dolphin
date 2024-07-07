@@ -13,7 +13,7 @@
 #define VK_USE_PLATFORM_XLIB_KHR
 #endif
 
-#if defined(ANDROID)
+#if defined(__ANDROID__)
 #define VK_USE_PLATFORM_ANDROID_KHR
 #endif
 
@@ -23,7 +23,7 @@
 
 #include "vulkan/vulkan.h"
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 #include <unistd.h>
 #endif
 
@@ -90,7 +90,7 @@ bool LoadVulkanInstanceFunctions(VkInstance instance);
 bool LoadVulkanDeviceFunctions(VkDevice device);
 void UnloadVulkanLibrary();
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 bool SupportsCustomDriver();
 #endif
 

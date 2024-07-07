@@ -40,7 +40,7 @@ constexpr u32 CODEPAGE_WINDOWS_1252 = 1252;
 #include <locale.h>
 #endif
 
-#if !defined(_WIN32) && !defined(ANDROID) && !defined(__HAIKU__) && !defined(__OpenBSD__) &&       \
+#if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__HAIKU__) && !defined(__OpenBSD__) &&       \
     !defined(__NetBSD__)
 static locale_t GetCLocale()
 {
@@ -115,11 +115,11 @@ bool CharArrayFromFormatV(char* out, int outsize, const char* format, va_list ar
     c_locale = _create_locale(LC_ALL, "C");
   writtenCount = _vsnprintf_l(out, outsize, format, c_locale, args);
 #else
-#if !defined(ANDROID) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+#if !defined(__ANDROID__) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
   locale_t previousLocale = uselocale(GetCLocale());
 #endif
   writtenCount = vsnprintf(out, outsize, format, args);
-#if !defined(ANDROID) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+#if !defined(__ANDROID__) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
   uselocale(previousLocale);
 #endif
 #endif
@@ -156,7 +156,7 @@ std::string StringFromFormatV(const char* format, va_list args)
   std::string temp = buf;
   delete[] buf;
 #else
-#if !defined(ANDROID) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+#if !defined(__ANDROID__) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
   locale_t previousLocale = uselocale(GetCLocale());
 #endif
   if (vasprintf(&buf, format, args) < 0)
@@ -165,7 +165,7 @@ std::string StringFromFormatV(const char* format, va_list args)
     buf = nullptr;
   }
 
-#if !defined(ANDROID) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
+#if !defined(__ANDROID__) && !defined(__HAIKU__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
   uselocale(previousLocale);
 #endif
 

@@ -127,7 +127,7 @@ void FreeLookController::LoadDefaults(const ControllerInterface& ciface)
 {
   EmulatedController::LoadDefaults(ciface);
 
-#ifndef ANDROID
+#ifndef __ANDROID__
   auto hotkey_string = [](std::vector<std::string> inputs) {
     return "@(" + JoinStrings(inputs, "+") + ')';
   };

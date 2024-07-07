@@ -178,7 +178,7 @@ void GCPad::LoadDefaults(const ControllerInterface& ciface)
 {
   EmulatedController::LoadDefaults(ciface);
 
-#ifdef ANDROID
+#ifdef __ANDROID__
   // Rumble
   m_rumble->SetControlExpression(0, "`Android/0/Device Sensors:Motor 0`");
 #else

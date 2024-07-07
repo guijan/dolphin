@@ -692,7 +692,7 @@ void CommandProcessorManager::HandleUnknownOpcode(u8 cmd_byte, const u8* buffer,
 // TODO: Mark the Android string as translatable once we have translations on Android. It's
 // currently untranslatable so translators won't try to look up how they translated "Synchronize
 // GPU Thread" and "On Idle Skipping" and then not find those strings and become confused.
-#ifdef ANDROID
+#ifdef __ANDROID__
         advice = "Please change the \"Synchronize GPU Thread\" setting to \"On Idle Skipping\"! "
                  "It's currently set to \"Never\", which makes this problem very likely to happen.";
 #else

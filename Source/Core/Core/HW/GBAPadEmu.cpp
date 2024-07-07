@@ -92,7 +92,7 @@ void GBAPad::LoadDefaults(const ControllerInterface& ciface)
 {
   EmulatedController::LoadDefaults(ciface);
 
-#ifndef ANDROID
+#ifndef __ANDROID__
   // Buttons
   m_buttons->SetControlExpression(0, "`Z`");  // B
   m_buttons->SetControlExpression(1, "`X`");  // A

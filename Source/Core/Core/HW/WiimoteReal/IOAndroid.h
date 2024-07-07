@@ -3,7 +3,7 @@
 
 #pragma once
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 #include <jni.h>
 #include <string>
 

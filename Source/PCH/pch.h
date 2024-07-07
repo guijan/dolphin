@@ -39,7 +39,7 @@
 #include <ctype.h>
 #include <deque>
 #include <errno.h>
-#if !defined ANDROID && !defined _WIN32
+#if !defined __ANDROID__ && !defined _WIN32
 #include <execinfo.h>
 #endif
 #include <fcntl.h>

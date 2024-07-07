@@ -224,7 +224,7 @@ std::unique_ptr<BootParameters> BootParameters::GenerateFromFile(std::vector<std
   if (paths.size() == 1)
     paths.clear();
 
-#ifdef ANDROID
+#ifdef __ANDROID__
   if (extension.empty() && IsPathAndroidContent(path))
   {
     const std::string display_name = GetAndroidContentDisplayName(path);

@@ -56,7 +56,7 @@
 #include <sys/param.h>
 #endif
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 #include "jni/AndroidCommon/AndroidCommon.h"
 #endif
 
@@ -64,7 +64,7 @@ namespace fs = std::filesystem;
 
 namespace File
 {
-#ifdef ANDROID
+#ifdef __ANDROID__
 static std::string s_android_sys_directory;
 static std::string s_android_driver_directory;
 static std::string s_android_lib_directory;
@@ -88,7 +88,7 @@ FileInfo::FileInfo(const std::string& path) : FileInfo(path.c_str())
 
 FileInfo::FileInfo(const char* path)
 {
-#ifdef ANDROID
+#ifdef __ANDROID__
   if (IsPathAndroidContent(path))
   {
     const jlong result = GetAndroidContentSizeAndIsDirectory(path);
@@ -155,7 +155,7 @@ bool Delete(const std::string& filename, IfAbsentBehavior behavior)
 {
   DEBUG_LOG_FMT(COMMON, "{}: file {}", __func__, filename);
 
-#ifdef ANDROID
+#ifdef __ANDROID__
   if (filename.starts_with("content://"))
   {
     const bool success = DeleteAndroidContent(filename);
@@ -388,7 +388,7 @@ bool CreateEmptyFile(const std::string& filename)
   return true;
 }
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 static FSTEntry ScanDirectoryTreeAndroidContent(std::string directory, bool recursive)
 {
   FSTEntry parent_entry;
@@ -431,7 +431,7 @@ FSTEntry ScanDirectoryTree(std::string directory, bool recursive)
 {
   DEBUG_LOG_FMT(COMMON, "{}: directory {}", __func__, directory);
 
-#ifdef ANDROID
+#ifdef __ANDROID__
   if (IsPathAndroidContent(directory))
     return ScanDirectoryTreeAndroidContent(directory, recursive);
 #endif
@@ -773,7 +773,7 @@ static std::string CreateSysDirectoryPath()
   const std::string sys_directory = GetBundleDirectory() + DIR_SEP SYSDATA_DIR DIR_SEP;
 #elif defined(_WIN32) || defined(LINUX_LOCAL_DEV)
   const std::string sys_directory = GetExeDirectory() + DIR_SEP SYSDATA_DIR DIR_SEP;
-#elif defined ANDROID
+#elif defined(__ANDROID__)
   const std::string sys_directory = s_android_sys_directory + DIR_SEP;
   ASSERT_MSG(COMMON, !s_android_sys_directory.empty(), "Sys directory has not been set");
 #else
@@ -790,7 +790,7 @@ const std::string& GetSysDirectory()
   return sys_directory;
 }
 
-#ifdef ANDROID
+#ifdef __ANDROID__
 void SetSysDirectory(const std::string& path)
 {
   INFO_LOG_FMT(COMMON, "Setting Sys directory to {}", path);

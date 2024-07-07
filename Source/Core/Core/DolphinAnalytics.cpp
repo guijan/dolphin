@@ -16,7 +16,7 @@
 #include "Common/WindowsRegistry.h"
 #elif defined(__APPLE__)
 #include <objc/message.h>
-#elif defined(ANDROID)
+#elif defined(__ANDROID__)
 #include <functional>
 #include "Common/AndroidAnalytics.h"
 #endif
@@ -45,7 +45,7 @@ namespace
 constexpr char ANALYTICS_ENDPOINT[] = "https://analytics.dolphin-emu.org/report";
 }  // namespace
 
-#if defined(ANDROID)
+#if defined(__ANDROID__)
 static std::function<std::string(std::string)> s_get_val_func;
 void DolphinAnalytics::AndroidSetGetValFunc(std::function<std::string(std::string)> func)
 {
@@ -73,7 +73,7 @@ void DolphinAnalytics::ReloadConfig()
   std::unique_ptr<Common::AnalyticsReportingBackend> new_backend;
   if (Config::Get(Config::MAIN_ANALYTICS_ENABLED))
   {
-#if defined(ANDROID)
+#if defined(__ANDROID__)
     new_backend = std::make_unique<Common::AndroidAnalyticsBackend>(ANALYTICS_ENDPOINT);
 #else
     new_backend = std::make_unique<Common::HttpAnalyticsBackend>(ANALYTICS_ENDPOINT);
@@ -276,7 +276,7 @@ void DolphinAnalytics::MakeBaseBuilder()
   builder.AddData("win-ver-major", static_cast<u32>(winver.dwMajorVersion));
   builder.AddData("win-ver-minor", static_cast<u32>(winver.dwMinorVersion));
   builder.AddData("win-ver-build", static_cast<u32>(winver.dwBuildNumber));
-#elif defined(ANDROID)
+#elif defined(__ANDROID__)
   builder.AddData("os-type", "android");
   builder.AddData("android-manufacturer", s_get_val_func("DEVICE_MANUFACTURER"));
   builder.AddData("android-model", s_get_val_func("DEVICE_MODEL"));

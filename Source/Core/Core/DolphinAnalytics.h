@@ -13,7 +13,7 @@
 #include "Common/Analytics.h"
 #include "Common/CommonTypes.h"
 
-#if defined(ANDROID)
+#if defined(__ANDROID__)
 #include <functional>
 #endif
 // Non generic part of the Dolphin Analytics framework. See Common/Analytics.h
@@ -112,7 +112,7 @@ public:
   // Performs lazy-initialization of a singleton and returns the instance.
   static DolphinAnalytics& Instance();
 
-#if defined(ANDROID)
+#if defined(__ANDROID__)
   // Get value from java.
   static void AndroidSetGetValFunc(std::function<std::string(std::string)> function);
 #endif

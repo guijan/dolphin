@@ -31,7 +31,7 @@ inline u32 swap24(const u8* data)
   return (data[0] << 16) | (data[1] << 8) | data[2];
 }
 
-#if defined(ANDROID) || defined(__OpenBSD__)
+#if defined(__ANDROID__) || defined(__OpenBSD__)
 #undef swap16
 #undef swap32
 #undef swap64
